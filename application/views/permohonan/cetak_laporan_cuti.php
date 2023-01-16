@@ -1,4 +1,4 @@
-<h3>LAPORAN CUTI KARYAWAN PT KARYAPRATAMA DUNIA PADA BULAN <?php echo $bulan ?> TAHUN <?php echo $tahun ?></h3>
+<h3>LAPORAN CUTI KARYAWAN PT KARYAPRATAMA DUNIA -CIKARANG PADA BULAN <?php echo $bulan ?> TAHUN <?php echo $tahun ?></h3>
 	<table border="1" width="100%">
 	   <thead>
 	        <tr>

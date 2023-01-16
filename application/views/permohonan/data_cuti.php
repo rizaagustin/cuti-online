@@ -36,6 +36,7 @@
 						<th>Status</th>
 					</tr>
 				</thead>
+				<tbody>
 				<?php 
 					foreach ($record->result() as $b) {
 						echo "<tr>
@@ -53,6 +54,7 @@
 						</tr>";
 					}
 				?>
+				</tbody>
 			</table>
 		</div>
 		<!-- /.box-body -->
@@ -77,6 +79,7 @@
 						<th>Aksi</th>
 					</tr>
 				</thead>
+				<tbody>
 				<?php 
 					foreach ($record2->result() as $b) {
 						echo "<tr>
@@ -97,6 +100,7 @@
 						</tr>";
 					}
 				?>
+				</tbody>
 			</table>
 		</div>
 		<?php			
@@ -111,9 +115,9 @@
   		<div class="box-body">
 			<?php echo $this->session->flashdata('message');?>
 			<table  class="table table-bordered display nowrap" id="table3" width="100%">
-			   <thead>
-			        <tr>
-						<th>ID Permohonan</th>
+				<thead>
+					<tr>
+		      	<th>ID Permohonan</th>
 						<th>Pegawai</th>
 						<th>Jabatan</th>
 						<th>Cuti</th>
@@ -127,6 +131,7 @@
 						<th>Aksi</th>
 					</tr>
 				</thead>
+				<tbody>
 				<?php 
 					foreach ($record3->result() as $b) {
 						echo "<tr>
@@ -152,6 +157,7 @@
 						</tr>";
 					}
 				?>
+				</tbody>
 			</table>
 		</div>
   </div>

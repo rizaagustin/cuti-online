@@ -17,6 +17,11 @@ class Pegawai extends CI_Controller{
 		$this->template->load('template','pegawai/lihat_data',$data);
 	}
 
+	function cetak(){
+		$data['record'] = $this->M_pegawai->tampilkan_data();
+		$this->load->view('pegawai/cetak_data',$data);
+	}
+
 	function alert($message,$type){
 		$message = $this->session->set_flashdata('message', '<div class="alert alert-'.$type.'" role="alert">
 				'.$message.'<button type="button" class="close" data-dismiss="alert" aria-label="Close">

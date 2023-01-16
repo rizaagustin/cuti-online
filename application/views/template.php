@@ -52,7 +52,7 @@ u       folder instead of downloading all of them to reduce the load. -->
     <!-- Logo -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>SI</b>CO</span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg">SI<b>CUTI</b> ONLINE</span>
     </a>
@@ -143,27 +143,33 @@ u       folder instead of downloading all of them to reduce the load. -->
             <li><a href="<?php echo base_url(); ?>jabatan"><i class="fa fa-circle-o"></i> Jabatan</a></li>
             <li><a href="<?php echo base_url(); ?>pegawai"><i class="fa fa-circle-o"></i> Pegawai</a></li>
             <li><a href="<?php echo base_url(); ?>Cuti"><i class="fa fa-circle-o"></i> Cuti</a></li>
+            <li><a href="<?php echo base_url(); ?>libur"><i class="fa fa-circle-o"></i> Libur</a></li>
           </ul>
         </li>
         <?php } ?>      
-        <?php if ($tipe_user != 'DIREKTUR') { ?>
+
         <li><a href="<?php echo base_url(); ?>permohonan"><i class="fa fa-circle-o text-red"></i> <span>Permohonan</span></a></li>
-        <?php } ?>      
+
         <?php if ($tipe_user != 'STAFF') { ?>
         <li><a href="<?php echo base_url(); ?>permohonan/validasi"><i class="fa fa-circle-o text-red"></i> <span>Persetujuan</span></a></li>
         <?php } ?>      
         <li><a href="<?php echo base_url(); ?>permohonan/data_cuti"><i class="fa fa-circle-o text-red"></i> <span>Data Cuti Validasi</span></a></li>        
         <!-- HRD -->
         <?php 
-        $jabatan = $this->session->userdata('nama_jabatan');
-        $posisi= strpos(strtoupper($jabatan),"HRD");
-        if ($posisi) { ?>
+        $jabatan = $this->session->userdata('id_jabatan');
+        $posisi= strpos(strtoupper($jabatan),"HQD");
+        if ($posisi !== false) {
+          if ($tipe_user == 'DIREKTUR' OR $tipe_user == 'MANAGER' OR $tipe_user == 'SPV') {
+          ?>
         <li><a href="<?php echo base_url(); ?>permohonan/laporan"><i class="fa fa-circle-o text-red"></i> <span>Laporan Cuti</span></a></li>                
         <li><a href="<?php echo base_url(); ?>permohonan/sisacuti"><i class="fa fa-circle-o text-red"></i> <span>Sisa Cuti Karyawan</span></a></li>                        
-        <?php } ?>      
+        <?php 
+          }
+        } 
+        ?>      
         
         <!-- ADMIN -->
-        <?php if ($tipe_user == 'ADMIN') { ?>
+        <?php if ($tipe_user == 'ADMIN' OR $tipe_user == 'DIREKTUR') { ?>
         <li><a href="<?php echo base_url(); ?>permohonan/laporan"><i class="fa fa-circle-o text-red"></i> <span>Laporan Cuti</span></a></li>                
         <li><a href="<?php echo base_url(); ?>permohonan/sisacuti"><i class="fa fa-circle-o text-red"></i> <span>Sisa Cuti Karyawan</span></a></li>                        
         <?php } ?>      
@@ -242,6 +248,7 @@ u       folder instead of downloading all of them to reduce the load. -->
 <script src="<?php echo base_url(); ?>asset/web/pegawai.js"></script>
 <script src="<?php echo base_url(); ?>asset/web/cuti.js"></script>
 <script src="<?php echo base_url(); ?>asset/web/permohonan.js"></script>
+<script src="<?php echo base_url(); ?>asset/web/libur.js"></script>
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree()

@@ -2,7 +2,7 @@
 Class Permohonan extends CI_Controller{
 	function __construct(){
 		parent:: __construct();
-		$this->load->model(array('M_permohonan','M_pegawai','M_cuti'));
+		$this->load->model(array('M_permohonan','M_pegawai','M_cuti','M_permohonan','M_libur'));
 		$this->load->library('session');
 		if (empty($this->session->userdata('id_pegawai'))){
 			redirect('auth/login');
@@ -22,8 +22,12 @@ Class Permohonan extends CI_Controller{
 		if ($this->session->userdata('tipe_user') == 'MANAGER') {
 		  $data['pegawai'] = $this->M_pegawai->tampilkan_data_byid($id_pegawai)->result();
 		}elseif($this->session->userdata('tipe_user') == 'SPV'){
-		  $data['pegawai'] =$this->M_pegawai->tampilkan_data_oprator_spv($id_departemen)->result();			
+		  $data['pegawai'] =$this->M_pegawai->tampilkan_data_oprator_spv($id_departemen)->result();
+		}elseif($this->session->userdata('tipe_user') == 'LEADER'){
+		  $data['pegawai'] =$this->M_pegawai->tampilkan_data_oprator_leader($id_departemen)->result();
 		}elseif($this->session->userdata('tipe_user') == 'STAFF'){
+		  $data['pegawai'] =$this->M_pegawai->tampilkan_data_byid($id_pegawai)->result();		
+		}elseif($this->session->userdata('tipe_user') == 'DIREKTUR'){
 		  $data['pegawai'] =$this->M_pegawai->tampilkan_data_byid($id_pegawai)->result();		
 		}else{
 		  $data['pegawai'] =$this->M_pegawai->tampilkan_data()->result();	
@@ -36,6 +40,13 @@ Class Permohonan extends CI_Controller{
 	}
 
 	function post(){
+
+		// $hari = 'Minggu';
+		// if ($hari != 'Minggu' and $hari != 'Sabtu') {
+		// 	echo "tes";
+		// }
+
+
 		$tgl_permohonan = date('Y-m-d');
 		$daftar_hari = array(
 		 'Sunday' => 'Minggu',
@@ -58,31 +69,61 @@ Class Permohonan extends CI_Controller{
 		$user_create = $this->session->userdata('id_pegawai');
 		// echo $pegawai['tipe_user'];
 		// die;
-		// $tgl_mulai = '2018-10-01';
-		// $tgl_selesai = '2018-10-07';
-		$hari = 1;
+		// $tgl_mulai = '2018-12-24';
+		// $tgl_selesai = '2018-12-29';
+// $id_pegawai = 'ADM-HQD-04-001';
+		$cek_pending = $this->M_permohonan->cek_pending($id_pegawai);
+		if ($cek_pending == 0) {
+			$message = 'Data Gagal disimpan, Data Permohonan pegawai masih ada yang belum di approve';
+			$type = 'danger';
+			echo $this->alert($message,$type);				
+
+			die;
+		}
+
+
+		$hari = 0;
 		$jml_hari = 0;
-		for ($i=$tgl_mulai; $i <= $tgl_selesai; $i++) { 
-			$jml_hari = $hari;
+		for ($i=$tgl_mulai; $i <= $tgl_selesai; $i = date('Y-m-d', strtotime('+1 days', strtotime($i)))) { 
 			$namahari = date('l', strtotime($i));
 			if ($pegawai['tipe_user'] == 'OPERATOR') {
 				if ($daftar_hari[$namahari] != 'Minggu') {
 					// echo $hari++.' | '.$daftar_hari[$namahari];		
 					// echo "<br>";
-					$hari++;
+					$cek_libur = $this->M_libur->cek_libur($i);
+					if ($cek_libur > 0) {
+						if ($id_cuti == 'CT-001') {
+							$data_detail = array('id_permohonan' => $id_permohonan ,'id_pegawai' => $id_pegawai,'tgl_cuti' => $i);
+							$this->M_permohonan->simpan_detail($data_detail);							
+						}
+						$hari++;
+					}
+
 				}
 			} else {
 				if ($daftar_hari[$namahari] != 'Minggu' AND $daftar_hari[$namahari] != 'Sabtu') {
 					// echo $hari++.' | '.$daftar_hari[$namahari];		
-					// echo "<br>";
-					$hari++;
+					$cek_libur = $this->M_libur->cek_libur($i);
+					if ($cek_libur > 0) {
+						if ($id_cuti == 'CT-001') {
+							$data_detail = array('id_permohonan' => $id_permohonan ,'id_pegawai' => $id_pegawai,'tgl_cuti' => $i);
+							$this->M_permohonan->simpan_detail($data_detail);							
+						}
+							// echo $hari++.' | '.$daftar_hari[$namahari].' | '.$i;		
+							// echo "<br>";
+								$hari++;
+					}
 				}
 			}
 		}
+			$jml_hari = $hari;
+		// echo $hari;
+		// die;
 
 		if ($cek_cuti['id_cuti'] == 'CT-001') {
 			if ($jml_hari > $sisacuti) {
 				//alert 
+				$this->M_permohonan->hapus_detail($id_permohonan);
 				$message = 'Data Gagal disimpan Jumlah Cuti Melebihi Sisa Cuti';
 				$type = 'danger';
 				echo $this->alert($message,$type);			
@@ -112,6 +153,8 @@ Class Permohonan extends CI_Controller{
 		// $id_departemen = $this->session->userdata('id_departemen');
 			// if($tipe_user == 'SPV') {
 			// 	$data['record'] = $this->M_permohonan->tampilkan_data_pending_spv();
+			// }elseif ($tipe_user == 'LEADER') {
+			//	$data['record'] = $this->M_permohonan->tampilkan_data_pending_leader();
 			// }elseif ($tipe_user == 'MANAGER') {
 			// 	$data['record'] = $this->M_permohonan->tampilkan_data_pending_manager();
 			// }elseif ($tipe_user == 'DIREKTUR'){
@@ -125,6 +168,11 @@ Class Permohonan extends CI_Controller{
 			  $data['record'] = $this->M_permohonan->tampilkan_data_pending();
 			}elseif($tipe_user == 'SPV') {
 			   $data['record'] = $this->M_permohonan->tampilkan_data_pending_spv();
+			}elseif($tipe_user == 'LEADER') {
+			   $data['record'] = $this->M_permohonan->tampilkan_data_pending_leader();
+			}elseif($tipe_user == 'DIREKTUR') {
+			   $departemen = substr($this->session->userdata('id_departemen'), 0, 3);  // abcd
+			   $data['record'] = $this->M_permohonan->tampilkan_data_pending_direktur($departemen);				
 			}else{
 			  $data['record'] = $this->M_permohonan->tampilkan_data_pending_bydepartemen();				
 			}						
@@ -145,7 +193,7 @@ Class Permohonan extends CI_Controller{
 		$tipe_user = $this->session->userdata('tipe_user');
 		$id_pegawai = $this->session->userdata('id_pegawai');
         $jabatan = $this->session->userdata('nama_jabatan');
-        $posisi= strpos(strtoupper($jabatan),"HRD");
+        $posisi= strpos(strtoupper($jabatan),"HQD");
         if ($posisi == true) {
 			$data['record'] = $this->M_permohonan->tampilkan_data_tolak();
 			$data['record2'] = $this->M_permohonan->tampilkan_data_setuju();
@@ -153,12 +201,17 @@ Class Permohonan extends CI_Controller{
 			if($tipe_user == 'SPV') {
 				$data['record'] = $this->M_permohonan->tampilkan_data_tolak_spv();
 				$data['record2'] = $this->M_permohonan->tampilkan_data_setuju_spv();
+			}elseif ($tipe_user == 'LEADER') {
+				$data['record'] = $this->M_permohonan->tampilkan_data_tolak_leader();
+				$data['record2'] = $this->M_permohonan->tampilkan_data_setuju_leader();
 			}elseif ($tipe_user == 'MANAGER') {
 				$data['record'] = $this->M_permohonan->tampilkan_data_tolak_manager();
 				$data['record2'] = $this->M_permohonan->tampilkan_data_setuju_manager();
 			}elseif ($tipe_user == 'DIREKTUR'){
 				$data['record'] = $this->M_permohonan->tampilkan_data_tolak_direktur();
 				$data['record2'] = $this->M_permohonan->tampilkan_data_setuju_direktur();
+				// $data['record'] = $this->M_permohonan->tampilkan_data_tolak_manager();
+				// $data['record2'] = $this->M_permohonan->tampilkan_data_setuju_manager();
 			}elseif($tipe_user == 'ADMIN') {
 				$data['record'] = $this->M_permohonan->tampilkan_data_tolak();
 				$data['record2'] = $this->M_permohonan->tampilkan_data_setuju();
@@ -259,7 +312,7 @@ Class Permohonan extends CI_Controller{
 		}		
 
 	}
-
+ 
 	function sisacuti(){
 		$data['tahun'] = $tahun = date('Y');
 		$data['record'] = $this->M_permohonan->sisa_cuti($tahun);

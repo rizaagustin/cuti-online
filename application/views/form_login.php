@@ -34,7 +34,7 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Masukan ID Pegawai dan Password</p>
+    <p class="login-box-msg">Masukan ID Pegawai dan Password 1</p>
       <?php echo $this->session->flashdata('message');?>
       <?php
           echo form_open('auth/login');

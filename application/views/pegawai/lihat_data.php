@@ -1,6 +1,6 @@
 <div class="box">
 <div class="box-header with-border">
-  <h3 class="box-title">Data Pegawai</h3>
+  <h3 class="box-title">Data Pegawai <?php echo anchor('pegawai/cetak/','Cetak',array('class' => 'btn btn-warning','target' => '_blank')) ?></h3>
 
   <div class="box-tools pull-right">
     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -12,7 +12,23 @@
 </div>
 <div class="box-body">
 	<?php echo $this->session->flashdata('message');?>
-	<table  class="table table-bordered" id="example1">
+	<?php 
+		// $lama_kerja = 7;
+		// if($lama_kerja % 14) {
+		// 	// echo "12";
+		// // echo $cuti['jml_cuti'];
+		// // echo "<br>";
+		// echo	$sisacuti = 12;
+			
+		// } else {
+		// // echo $cuti['jml_cuti'];	
+		// // echo "<br>";
+		// 	//echo 18;
+		// echo	$sisacuti = 18;
+
+		// }	
+	?>
+	<table  class="table table-bordered display nowrap" id="table1" width="100%">
 	   <thead>
 	        <tr>
 				<th>ID Pegawai</th>
@@ -51,7 +67,7 @@
 </div>
 <!-- /.box-body -->
 <div class="box-footer">
-	<!-- isi footer -->
+	Created By. Arifin Supardan
 </div>
 <!-- /.box-footer-->
 </div>

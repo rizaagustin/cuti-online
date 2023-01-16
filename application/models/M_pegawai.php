@@ -32,8 +32,14 @@ Class M_pegawai extends CI_Model{
 
 	function tampilkan_data(){
 		// return $this->db->get('pegawai');
-		$this->db->select('*,
-		(year(now()) - year(pegawai.tmk)) + 1 as waktu_kerja');
+		// $this->db->select('*,
+		// (year(now()) - year(pegawai.tmk)) + 1 as waktu_kerja');
+		// $this->db->from('pegawai');
+		// $this->db->join('jabatan', 'jabatan.id_jabatan = pegawai.id_jabatan');
+		// $this->db->join('departemen', 'departemen.id_departemen = jabatan.id_departemen');
+		// $query = $this->db->get();
+
+		$this->db->select('*,TIMESTAMPDIFF(YEAR,pegawai.tmk, CURDATE()) as waktu_kerja');
 		$this->db->from('pegawai');
 		$this->db->join('jabatan', 'jabatan.id_jabatan = pegawai.id_jabatan');
 		$this->db->join('departemen', 'departemen.id_departemen = jabatan.id_departemen');
@@ -43,8 +49,7 @@ Class M_pegawai extends CI_Model{
 
 	function tampilkan_data_byid($id_pegawai){
 		// return $this->db->get('pegawai');
-		$this->db->select('*,
-		(year(now()) - year(pegawai.tmk)) + 1 as waktu_kerja');
+		$this->db->select('*,TIMESTAMPDIFF(YEAR,pegawai.tmk, CURDATE()) as waktu_kerja');
 		$this->db->from('pegawai');
 		$this->db->join('jabatan', 'jabatan.id_jabatan = pegawai.id_jabatan');
 		$this->db->join('departemen', 'departemen.id_departemen = jabatan.id_departemen');
@@ -55,9 +60,8 @@ Class M_pegawai extends CI_Model{
 
 	function tampilkan_data_oprator_spv($id_departemen){
 		// return $this->db->get('pegawai');
-		$tipe_user = array('SPV','OPERATOR');
-		$this->db->select('*,
-		(year(now()) - year(pegawai.tmk)) + 1 as waktu_kerja');
+		$tipe_user = array('LEADER','SPV','OPERATOR');
+		$this->db->select('*,TIMESTAMPDIFF(YEAR,pegawai.tmk, CURDATE()) as waktu_kerja');
 		$this->db->from('pegawai');
 		$this->db->join('jabatan', 'jabatan.id_jabatan = pegawai.id_jabatan');
 		$this->db->join('departemen', 'departemen.id_departemen = jabatan.id_departemen');
@@ -66,6 +70,21 @@ Class M_pegawai extends CI_Model{
 		$query = $this->db->get();
 		return $query;		
 	}
+
+
+	function tampilkan_data_oprator_leader($id_departemen){
+		// return $this->db->get('pegawai');
+		$tipe_user = array('LEADER','OPERATOR');
+		$this->db->select('*,TIMESTAMPDIFF(YEAR,pegawai.tmk, CURDATE()) as waktu_kerja');
+		$this->db->from('pegawai');
+		$this->db->join('jabatan', 'jabatan.id_jabatan = pegawai.id_jabatan');
+		$this->db->join('departemen', 'departemen.id_departemen = jabatan.id_departemen');
+        $this->db->where('jabatan.id_departemen', $id_departemen);
+        $this->db->where_in('pegawai.tipe_user', $tipe_user);
+		$query = $this->db->get();
+		return $query;		
+	}
+
 
 	function simpan($data){
 		$this->db->insert('pegawai',$data);

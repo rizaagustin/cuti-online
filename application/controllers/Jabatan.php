@@ -19,6 +19,11 @@ class Jabatan extends CI_Controller {
 
 	}
 
+	function cetak(){
+	$data['record'] = $this->M_jabatan->tampilkan_data();	
+	$this->load->view('jabatan/cetak_data',$data);		
+	}
+
 	function alert($message,$type){
 		$message = $this->session->set_flashdata('message', '<div class="alert alert-'.$type.'" role="alert">
 				'.$message.'<button type="button" class="close" data-dismiss="alert" aria-label="Close">

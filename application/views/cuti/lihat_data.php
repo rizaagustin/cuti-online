@@ -1,6 +1,6 @@
 <div class="box">
 <div class="box-header with-border">
-  <h3 class="box-title">Data Cuti</h3>
+  <h3 class="box-title">Data Cuti <?php echo anchor('cuti/cetak/','Cetak',array('class' => 'btn btn-warning','target' => '_blank')) ?></h3>
 
   <div class="box-tools pull-right">
     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -38,7 +38,7 @@
 </div>
 <!-- /.box-body -->
 <div class="box-footer">
-	<!-- isi footer -->
+	Created By. Arifin Supardan
 <label style="color:red"><i>* id cuti tahunan harus CT-001</i></label>
 </div>
 <!-- /.box-footer-->

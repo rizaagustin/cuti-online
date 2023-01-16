@@ -81,7 +81,7 @@
         	<option enabled>Silahkan Pilih Pegawai</option>
 	        	<?php 
 	        		foreach ($pegawai as $p) {
-	        			if ($p->waktu_kerja != 1) {
+	        			if ($p->waktu_kerja > 0) {
 		        			echo "<option value = '$p->id_pegawai'>$p->id_pegawai | $p->nama_pegawai | Lama Kerja $p->waktu_kerja tahun </option>";
 	        			}
 
@@ -92,8 +92,8 @@
 	      <div class="form-group">
 	        <label>Sisa Cuti Tahunan</label>
 	        <div class="input-group date" style="width: 75%">
-	          <input type="hidden" class="form-control pull-right" name="sisacuti" id="sisacuti" required placeholder="sisa cuti tahunan" readonly required>
-	          <input type="text" class="form-control pull-right" name="sisacuti2" id="sisacuti2" required placeholder="sisa cuti tahunan" readonly required>
+	          <input type="text" class="form-control pull-right" name="sisacuti" id="sisacuti" required placeholder="sisa cuti tahunan" readonly required>
+	          <input type="hidden" class="form-control pull-right" name="sisacuti2" id="sisacuti2" required placeholder="sisa cuti tahunan" readonly required>
 	        </div>
 	        <!-- /.input group -->
 	      </div>

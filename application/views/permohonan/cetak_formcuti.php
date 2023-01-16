@@ -3,7 +3,7 @@
 	<head>
 	</head>
 		<body bgcolor = "white">
-			<font size =5><center><b><u>FORM CUTI KARYAWAN PT KARYAPRATAMA DUNIA</u></b></center></font>
+			<font size =5><center><b><u>FORM CUTI KARYAWAN PT KARYAPRATAMA DUNIA - CIKARANG</u></b></center></font>
 
 			<br>
 			<section style="margin-left:100px;margin-right:100px">

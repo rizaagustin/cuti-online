@@ -1,4 +1,4 @@
-	<h3> SISA CUTI KARYAWAN PT KARYAPRATAMA DUNIA PADA TAHUN <?php echo $tahun ?></h3>
+	<h3> SISA CUTI KARYAWAN PT KARYAPRATAMA DUNIA PADA TAHUN - CIKARANG <?php echo $tahun ?></h3>
 	<hr>
 	<table border="1" width="100%" cellspacing = "0" cellpadding = "4">
 	   <thead>
@@ -14,7 +14,7 @@
 		</thead>
 		<?php 
 			foreach ($record->result() as $b) {
-				if ($b->waktu_kerja != 1) {
+				if ($b->waktu_kerja > 0) {
 					$sisacuti = 0;
 					if($b->waktu_kerja % 7) {
 						$jatahcuti = 12;

@@ -44,6 +44,7 @@
           <label>Tipe User</label>
           <select name="tipe_user" class="form-control" style="width: 500px">
             <option value="OPERATOR">OPERATOR</option>
+            <option value="LEADER">LEADER</option>
             <option value="STAFF">STAFF</option>
             <option value="SPV">SPV</option>
             <option value="MANAGER">MANAGER</option>

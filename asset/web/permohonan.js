@@ -105,7 +105,8 @@ $('body').on('click', '.validasi-permohonan', function(event) {
 
 
 function changeValue(id_pegawai){ 
-   $.ajax({
+  alert('ok');
+  $.ajax({
         type:"GET",
         url: window.weburi+"permohonan/get_datacuti/"+id_pegawai,
         success: function(res){

@@ -17,6 +17,7 @@
 	        <tr>
 				<th>ID Permohonan</th>
 				<th>Nama Pegawai</th>
+				<th>ID Departemen</th>
 				<th>Nama Jabatan</th>
 				<th>Cuti</th>
 				<th>Tanggal Permohonan</th>
@@ -28,13 +29,37 @@
 				<th>Aksi</th>
 			</tr>
 		</thead>
+		<tbody>
 		<?php 
 			foreach ($record->result() as $b) {
+		   if ($this->session->userdata('tipe_user') != 'ADMIN') {				
+			   if ($b->tipe_user == 'DIREKTUR') {				
+					echo "<tr>
+					<td>$b->id_permohonan</td>
+					<td>$b->nama_pegawai</td>
+					<td>$b->id_departemen</td>
+					<td>$b->nama_jabatan</td>
+					<td>$b->cuti_kpd</td>
+					<td>$b->tgl_permohonan</td>
+					<td>$b->tgl_mulai</td>
+					<td>$b->tgl_selesai</td>
+					<td>$b->jml_hari</td>
+					<td>$b->keterangan</td>
+					<td>$b->validasi</td>
+					<td>					
+						<a id_permohonan = '$b->id_permohonan' nm_pegawai = '$b->nama_pegawai' data = 'Tolak' class = 'btn btn-danger validasi-permohonan'>Tolak</a>
+						<a id_permohonan = '$b->id_permohonan' nm_pegawai = '$b->nama_pegawai' data = 'Setuju' class = 'btn btn-success validasi-permohonan'>Setuju</a>
+					</td>
+				</tr>";
+			    }
+			}    
+
 		       //kondisi untuk pegawai tidak bisa validasi permohonan dirinya sendiri
 			   if ($b->id_pegawai != $this->session->userdata('id_pegawai')) {				
 					echo "<tr>
 					<td>$b->id_permohonan</td>
 					<td>$b->nama_pegawai</td>
+					<td>$b->id_departemen</td>
 					<td>$b->nama_jabatan</td>
 					<td>$b->cuti_kpd</td>
 					<td>$b->tgl_permohonan</td>
@@ -51,11 +76,12 @@
 			    }
 			}
 		?>
+		</tbody>
 	</table>
 </div>
 <!-- /.box-body -->
 <div class="box-footer">
-	<!-- isi footer -->
+	Created By. Arifin Supardan
 </div>
 <!-- /.box-footer-->
 </div>

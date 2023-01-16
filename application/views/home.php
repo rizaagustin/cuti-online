@@ -36,10 +36,7 @@
  $('#calendar').fullCalendar({
     
     events: [
-    {
-      title: 'All Day Event',
-      start: '2017-07-01'
-    },
+
     <?PHP foreach ($buat_calender->result() as $row) {
          // $tgl_selesai = 0;
          // $tgl_selesai =  $row->tgl_selesai + 1;
@@ -52,10 +49,19 @@
         ,
         start : "<?php echo $row->tgl_mulai ?>",
         end   : "<?php echo $tgl_selesai ?>",
-        color: '#ff002f'
+        color: '#pink'
 
       },
     <?php } ?>      
+
+    <?PHP foreach ($libur->result() as $rowlibur) { ?>
+    {
+      title: '<?php echo $rowlibur->keterangan_libur ?>',
+      start: '<?php echo $rowlibur->tgl_libur ?>',
+      backgroundColor : 'red'
+    },
+    <?php } ?>      
+
   ]
 
 });

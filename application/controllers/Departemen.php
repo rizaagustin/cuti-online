@@ -16,6 +16,11 @@ class Departemen extends CI_Controller {
 	$this->template->load('template','departemen/lihat_data',$data);
 	}
 
+	function cetak(){
+	$data['record'] = $this->M_departemen->tampilkan_data()->result();	
+	$this->load->view('departemen/cetak_data',$data);		
+	}
+
 	function data_departemen(){
 		$data['record'] = $this->M_departemen->tampilkan_data()->result();	
 		json_encode($data);

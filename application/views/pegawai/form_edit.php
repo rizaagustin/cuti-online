@@ -52,7 +52,7 @@
       </div> 
 
       <?php
-        $hak_akses = array ('ADMIN' => 'ADMIN','OPERATOR' => 'OPERATOR','STAFF' => 'STAFF','SPV' => 'SPV', 'MANAGER' => 'MANAGER', 'DIREKTUR' => 'DIREKTUR');
+        $hak_akses = array ('ADMIN' => 'ADMIN','OPERATOR' => 'OPERATOR','LEADER' => 'LEADER','STAFF' => 'STAFF','SPV' => 'SPV', 'MANAGER' => 'MANAGER', 'DIREKTUR' => 'DIREKTUR');
         echo form_dropdown('tipe_user', $hak_akses,$record['tipe_user'],'
         class="form-control" required style = "width:500px"')?>
                 

@@ -26,7 +26,7 @@
 		</thead>
 		<?php 
 			foreach ($record->result() as $b) {
-				if ($b->waktu_kerja != 1) {
+				if ($b->waktu_kerja > 0) {
 					$sisacuti = 0;
 					if($b->waktu_kerja % 7) {
 						$jatahcuti = 12;
