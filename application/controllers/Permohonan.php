@@ -41,12 +41,6 @@ Class Permohonan extends CI_Controller{
 
 	function post(){
 
-		// $hari = 'Minggu';
-		// if ($hari != 'Minggu' and $hari != 'Sabtu') {
-		// 	echo "tes";
-		// }
-
-
 		$tgl_permohonan = date('Y-m-d');
 		$daftar_hari = array(
 		 'Sunday' => 'Minggu',
@@ -57,6 +51,7 @@ Class Permohonan extends CI_Controller{
 		 'Friday' => 'Jumat',
 		 'Saturday' => 'Sabtu'
 		);		
+
 		$id_permohonan = $this->M_permohonan->code_otomatis();
 		$tgl_mulai = $this->input->post('tgl_mulai');
 		$sisacuti = $this->input->post('sisacuti');
@@ -67,11 +62,7 @@ Class Permohonan extends CI_Controller{
 		$cek_cuti = $this->M_cuti->get_data($id_cuti)->row_array();
 		$keterangan = $this->input->post('keterangan');
 		$user_create = $this->session->userdata('id_pegawai');
-		// echo $pegawai['tipe_user'];
-		// die;
-		// $tgl_mulai = '2018-12-24';
-		// $tgl_selesai = '2018-12-29';
-// $id_pegawai = 'ADM-HQD-04-001';
+
 		$cek_pending = $this->M_permohonan->cek_pending($id_pegawai);
 		if ($cek_pending == 0) {
 			$message = 'Data Gagal disimpan, Data Permohonan pegawai masih ada yang belum di approve';
@@ -150,20 +141,6 @@ Class Permohonan extends CI_Controller{
 
 	function validasi(){
 		$tipe_user = $this->session->userdata('tipe_user');
-		// $id_departemen = $this->session->userdata('id_departemen');
-			// if($tipe_user == 'SPV') {
-			// 	$data['record'] = $this->M_permohonan->tampilkan_data_pending_spv();
-			// }elseif ($tipe_user == 'LEADER') {
-			//	$data['record'] = $this->M_permohonan->tampilkan_data_pending_leader();
-			// }elseif ($tipe_user == 'MANAGER') {
-			// 	$data['record'] = $this->M_permohonan->tampilkan_data_pending_manager();
-			// }elseif ($tipe_user == 'DIREKTUR'){
-			// 	$data['record'] = $this->M_permohonan->tampilkan_data_pending_direktur();
-			// }elseif($tipe_user == 'STAFF') {
-			// 	$data['record'] = $this->M_permohonan->tampilkan_data_pending_spv();
-			// }elseif($tipe_user == 'ADMIN') {
-			// 	$data['record'] = $this->M_permohonan->tampilkan_data_pending();
-			// }						
 			if($tipe_user == 'ADMIN') {
 			  $data['record'] = $this->M_permohonan->tampilkan_data_pending();
 			}elseif($tipe_user == 'SPV') {
@@ -210,8 +187,6 @@ Class Permohonan extends CI_Controller{
 			}elseif ($tipe_user == 'DIREKTUR'){
 				$data['record'] = $this->M_permohonan->tampilkan_data_tolak_direktur();
 				$data['record2'] = $this->M_permohonan->tampilkan_data_setuju_direktur();
-				// $data['record'] = $this->M_permohonan->tampilkan_data_tolak_manager();
-				// $data['record2'] = $this->M_permohonan->tampilkan_data_setuju_manager();
 			}elseif($tipe_user == 'ADMIN') {
 				$data['record'] = $this->M_permohonan->tampilkan_data_tolak();
 				$data['record2'] = $this->M_permohonan->tampilkan_data_setuju();
@@ -279,7 +254,7 @@ Class Permohonan extends CI_Controller{
  			'10' => 'OKTOBER' , 
  			'11' => 'NOVEMBER', 
  			'12' => 'DESEMBER');
-        // die;
+
     	$data['bulan'] = $data_bulan[$bulan];		
 		$data['record'] = $this->M_permohonan->laporan($tahun,$bulan);
 		 $this->load->view('permohonan/cetak_laporan_cuti',$data);	
@@ -298,16 +273,12 @@ Class Permohonan extends CI_Controller{
 		$cuti = $this->M_permohonan->jml_cuti($id_pegawai)->row_array();
 		$sisacuti = 0;
 		if($lama_kerja['waktu_kerja'] % 7) {
-			// echo "12";
-		// echo $cuti['jml_cuti'];
-		// echo "<br>";
-		echo	$sisacuti = 12 - $cuti['jml_cuti'];
+
+			echo	$sisacuti = 12 - $cuti['jml_cuti'];
 			
 		} else {
-		// echo $cuti['jml_cuti'];	
-		// echo "<br>";
-			//echo 18;
-		echo	$sisacuti = 18 - $cuti['jml_cuti'];
+
+			echo	$sisacuti = 18 - $cuti['jml_cuti'];
 
 		}		
 
